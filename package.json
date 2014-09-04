@@ -1,6 +1,6 @@
 {
   "name": "rygr-util",
-  "version": "0.2.1",
+  "version": "1.0.1",
   "description": "Utilities for Rygr",
   "main": "index.js",
   "files": [
