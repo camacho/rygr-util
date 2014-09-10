@@ -21,6 +21,7 @@
     "chalk": "^0.5.1",
     "dateformat": "^1.0.8-1.2.3",
     "glob": "^4.0.4",
+    "q": "^1.0.1",
     "underscore": "^1.6.0",
     "underscore-deep-extend": "0.0.5"
   },
