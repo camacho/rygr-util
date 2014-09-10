@@ -1,8 +1,10 @@
 _ = require 'underscore'
+Q = require 'q'
 
 module.exports = (args, callbacks, done) ->
   stack = []
 
+  flow = Q.defer()
   args = [args] unless _.isArray args
   baseArity = args.length + 1
 
@@ -22,9 +24,12 @@ module.exports = (args, callbacks, done) ->
     index = 0
 
     next = (err) ->
+      return unless Q.isPending flow.promise
+
       layer = stack[index++]
 
       unless layer
+        if err then flow.reject err else flow.resolve()
         done? err
         return
 
@@ -47,3 +52,5 @@ module.exports = (args, callbacks, done) ->
     next()
 
   handle()
+
+  flow.promise
