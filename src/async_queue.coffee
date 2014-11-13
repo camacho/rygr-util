@@ -1,1 +1,1 @@
-module.exports = require 'rgyr.async-queue'
+module.exports = require 'rygr.async-queue'
