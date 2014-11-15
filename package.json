@@ -1,6 +1,6 @@
 {
   "name": "rygr-util",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Utilities for Rygr",
   "main": "index.js",
   "files": [
@@ -22,7 +22,7 @@
     "dateformat": "^1.0.8-1.2.3",
     "glob": "^4.0.4",
     "q": "^1.0.1",
-    "rygr.async-queue": "^1.0.0",
+    "rygr.async-queue": "^1.0.2",
     "underscore": "^1.6.0",
     "underscore-deep-extend": "0.0.5"
   },
