@@ -78,7 +78,7 @@ readFiles = (filenames, options) ->
     [null, files]
 
 parseAttributes = (data, env) ->
-  _.extend data, options if options = data.environments?[env]
+  _.deepExtend data, options if options = data.environments?[env]
   delete data.environments
   data
 
