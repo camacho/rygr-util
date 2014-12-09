@@ -13,15 +13,7 @@ alertError = $.notify.onError (error) ->
   "Error: #{ message }"
 
 cleanDir = (dir, cb) ->
-  fs = require 'fs'
-
-  if fs.existsSync dir
-    gulp.src("#{ dir }/*", read: false)
-      .pipe($.plumber errorHandler: alertError)
-      .pipe $.rimraf force: true
-      .end cb
-  else
-    fs.mkdir dir, cb
+  require('del') ["#{ dir }/**", "!#{dir}"], cb
 
 # ------------------------------------------------------------------------------
 # Directory management
@@ -45,10 +37,19 @@ gulp.task 'build', (cb) ->
   runSequence 'clean', 'compile', cb
 
 # ------------------------------------------------------------------------------
+# Build
+# ------------------------------------------------------------------------------
+gulp.task 'test', ['build'], ->
+  gulp.src('tests/specs/*')
+    .pipe($.plumber errorHandler: alertError)
+    .pipe($.jasmine())
+
+# ------------------------------------------------------------------------------
 # Watch
 # ------------------------------------------------------------------------------
 gulp.task 'watch', (cb) ->
-  gulp.watch 'src/**/*.coffee', ['compile']
+  gulp.watch 'src/**/*.coffee', ['compile', 'test']
+  gulp.watch 'tests/**/*.coffee', ['test']
   cb()
 
 # ------------------------------------------------------------------------------
@@ -90,4 +91,4 @@ gulp.task 'watch', (cb) ->
 # Default
 # ------------------------------------------------------------------------------
 gulp.task 'default', ->
-  runSequence 'build', 'watch'
+  runSequence 'build', 'test', 'watch'

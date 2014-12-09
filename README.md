@@ -21,10 +21,15 @@ config = require('rygr-util').config
 ```
 
 ### Arguments
-Config takes two arguments:
+```coffee
+{config} = require 'rygr-util
+config.initialize (globs..., [options])
+```
 
-* Glob query **Array<String>|String** *(required)*
-  An array of glob query strings or single glob query. If the argument is an array, the order in which the queries are passed in will be the order in which they configs override each other when the contents of the files are merged.
+Config takes the following arguments:
+
+* Glob query|queries **Array<String>|String** *(required)*
+  A series of glob queries (complex array queries are supported via [glob-all](https://www.npmjs.org/package/glob-all)). If the argument is an array, the order in which the queries are passed in will be the order in which they configs override each other when the contents of the files are merged.
 * Options **Object** *(optional)*
   An object to change default behavior of the method
 

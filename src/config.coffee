@@ -1,11 +1,18 @@
 _ = require 'underscore'
-glob = require 'glob'
+glob = require 'glob-all'
 path = require 'path'
 fs = require 'fs'
 
-_.mixin deepExtend: require('underscore-deep-extend')(_)
+_.mixin deepExtend: require('underscore-deep-extend') _
 
-initialize = (queries, options = {}) ->
+initialize = (queries...) ->
+  options = _.last queries
+
+  if _.isArray(options) or _.isString options
+    options = {}
+  else
+    queries.pop()
+
   # Ensure we have an array or string for the directory name
   unless _.isArray(queries) or _.isString queries
     return throw new Error 'Config queries must be a string or array'
@@ -60,7 +67,8 @@ readFiles = (filenames, options) ->
     fullPath = path.resolve filename
 
     try
-      file = require fullPath
+      # Hack to make sure we are getting a new object every time
+      file = JSON.parse JSON.stringify require fullPath
     catch e
       errors.push e
       continue
@@ -78,7 +86,7 @@ readFiles = (filenames, options) ->
     [null, files]
 
 parseAttributes = (data, env) ->
-  _.deepExtend data, options if options = data.environments?[env]
+  _.deepExtend data, envParams if envParams = data.environments?[env]
   delete data.environments
   data
 
